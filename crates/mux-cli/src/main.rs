@@ -1,6 +1,5 @@
 use anyhow::Result;
-use mux_acp::{Server};
-use mux_acp::Request;
+use mux_acp::Server;
 use mux_telemetry as telemetry;
 use tokio::io::{stdin, stdout};
 use tracing::info;
