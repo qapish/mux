@@ -1,0 +1,13 @@
+[package]
+name = "mux-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+mux-acp = { path = "../mux-acp" }
+mux-planner = { path = "../mux-planner" }
+mux-telemetry = { path = "../mux-telemetry" }
+mux-config = { path = "../mux-config" }

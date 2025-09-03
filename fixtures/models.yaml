@@ -1,0 +1,13 @@
+models:
+  - name: qwen2.5-coder-7b
+    path: nfs://models/Qwen2.5-Coder-7B-Instruct
+    backend: llamacpp
+    tokenizer: tiktoken:qwen2.5
+    quant: q4_k_m
+    max_ctx: 32768
+  - name: mistral-nemo-12b
+    path: nfs://models/Mistral-Nemo-Base-12B
+    backend: candle
+    tokenizer: spm:mistral
+    quant: fp16
+    max_ctx: 131072

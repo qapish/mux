@@ -1,0 +1,39 @@
+[workspace]
+members = [
+  "crates/mux-cli",
+  "crates/mux-acp",
+  "crates/mux-planner",
+  "crates/mux-router",
+  "crates/mux-drivers",
+  "crates/mux-drivers/mux-driver-vllm",
+  "crates/mux-drivers/mux-driver-llamacpp",
+  "crates/mux-drivers/mux-driver-candle",
+  "crates/mux-fs",
+  "crates/mux-diff",
+  "crates/mux-config",
+  "crates/mux-telemetry",
+  "xtask",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+
+[workspace.dependencies]
+anyhow = "1"
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter","fmt","json"] }
+clap = { version = "4", features = ["derive"] }
+bytes = "1"
+futures = "0.3"
+reqwest = { version = "0.12", features = ["json","stream","gzip","brotli","deflate","rustls-tls"] }
+hyper = { version = "1", features = ["http1","http2","client","server","runtime"] }
+uuid = { version = "1", features = ["v4","serde"] }
+time = { version = "0.3", features = ["serde"] }
+async-trait = "0.1"
+ignore = "0.4"

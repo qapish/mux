@@ -1,0 +1,12 @@
+[package]
+name = "mux-driver-candle"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+futures = { workspace = true }
+tracing = { workspace = true }
+mux-drivers = { path = ".." }
+mux-router = { path = "../../mux-router" }
+async-trait = { workspace = true }

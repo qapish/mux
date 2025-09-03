@@ -1,0 +1,18 @@
+[package]
+name = "mux-drivers"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+futures = { workspace = true }
+serde = { workspace = true }
+tracing = { workspace = true }
+mux-router = { path = "../mux-router" }
+
+[features]
+default = []
+vllm = []
+llamacpp = []
+candle = []
