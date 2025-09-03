@@ -1,6 +1,6 @@
 use anyhow::Result;
 use futures::stream;
-use mux_drivers::{Driver, ChatRequest, ChatChunk};
+use mux_drivers::{ChatChunk, ChatRequest, Driver};
 use mux_router::ModelSpec;
 use std::sync::Arc;
 
@@ -20,8 +20,14 @@ impl Driver for CandleDriver {
         _req: ChatRequest,
     ) -> Result<futures::stream::BoxStream<'static, Result<ChatChunk>>> {
         let s = stream::iter(vec![
-            Ok(ChatChunk{ text: "hello from candle stub".into(), done: false }),
-            Ok(ChatChunk{ text: "".into(), done: true }),
+            Ok(ChatChunk {
+                text: "hello from candle stub".into(),
+                done: false,
+            }),
+            Ok(ChatChunk {
+                text: "".into(),
+                done: true,
+            }),
         ]);
         Ok(Box::pin(s))
     }

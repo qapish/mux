@@ -1,6 +1,6 @@
 use anyhow::Result;
 use futures::stream;
-use mux_drivers::{Driver, ChatRequest, ChatChunk};
+use mux_drivers::{ChatChunk, ChatRequest, Driver};
 use mux_router::ModelSpec;
 use std::sync::Arc;
 
@@ -10,7 +10,9 @@ pub struct LlamaCppDriver {
 
 impl LlamaCppDriver {
     pub fn new(endpoint: String) -> Arc<Self> {
-        Arc::new(Self { _endpoint: endpoint })
+        Arc::new(Self {
+            _endpoint: endpoint,
+        })
     }
 }
 
@@ -22,8 +24,14 @@ impl Driver for LlamaCppDriver {
         _req: ChatRequest,
     ) -> Result<futures::stream::BoxStream<'static, Result<ChatChunk>>> {
         let s = stream::iter(vec![
-            Ok(ChatChunk{ text: "hello from llamacpp stub".into(), done: false }),
-            Ok(ChatChunk{ text: "".into(), done: true }),
+            Ok(ChatChunk {
+                text: "hello from llamacpp stub".into(),
+                done: false,
+            }),
+            Ok(ChatChunk {
+                text: "".into(),
+                done: true,
+            }),
         ]);
         Ok(Box::pin(s))
     }

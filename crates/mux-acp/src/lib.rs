@@ -50,6 +50,9 @@ where
     }
 
     pub async fn respond_err(&mut self, e: anyhow::Error) -> Result<()> {
-        self.respond(Response::Error { message: e.to_string() }).await
+        self.respond(Response::Error {
+            message: e.to_string(),
+        })
+        .await
     }
 }

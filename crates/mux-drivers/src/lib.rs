@@ -16,10 +16,19 @@ pub struct ChatChunk {
 
 #[async_trait]
 pub trait Driver: Send + Sync {
-    async fn ensure_loaded(&self, _spec: &ModelSpec) -> Result<()> { Ok(()) }
-    async fn unload(&self, _name: &str) -> Result<()> { Ok(()) }
-    async fn health(&self) -> Result<()> { Ok(()) }
+    async fn ensure_loaded(&self, _spec: &ModelSpec) -> Result<()> {
+        Ok(())
+    }
+    async fn unload(&self, _name: &str) -> Result<()> {
+        Ok(())
+    }
+    async fn health(&self) -> Result<()> {
+        Ok(())
+    }
 
-    async fn chat_stream(&self, _spec: &ModelSpec, _req: ChatRequest)
-        -> Result<BoxStream<'static, Result<ChatChunk>>>;
+    async fn chat_stream(
+        &self,
+        _spec: &ModelSpec,
+        _req: ChatRequest,
+    ) -> Result<BoxStream<'static, Result<ChatChunk>>>;
 }
