@@ -21,3 +21,9 @@ cargo run -p mux-cli
 ```
 
 See `fixtures/models.yaml` for an example model registry.
+
+## Architecture
+
+<p align="center">
+  <img src="docs/architecture.svg" width="100%" alt="mux architecture diagram" />
+</p>

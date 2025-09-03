@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <style>
+      .title { font: 700 22px Inter, Arial, sans-serif; fill: #111; }
+      .subtitle { font: 600 16px Inter, Arial, sans-serif; fill: #333; }
+      .label { font: 500 14px Inter, Arial, sans-serif; fill: #222; }
+      .small { font: 12px Inter, Arial, sans-serif; fill: #333; }
+      .box { fill: #fff; stroke: #1f2937; stroke-width: 1.5; rx: 10; }
+      .box-muted { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.2; rx: 10; }
+      .pill { fill: #eef2ff; stroke: #6366f1; stroke-width: 1; rx: 12; }
+      .arrow { stroke: #111827; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+      .arrow-dashed { stroke: #6b7280; stroke-width: 2; stroke-dasharray: 6 6; marker-end: url(#arrowhead-muted); fill: none; }
+      .legend { font: 12px Inter, Arial, sans-serif; fill: #111; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#111827"/>
+    </marker>
+    <marker id="arrowhead-muted" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="30" y="45" class="title">mux — Small Datacenter Inference Architecture</text>
+  <text x="30" y="72" class="small">ACP-native router with local/remote modes, staging, GPU residency, and pluggable drivers</text>
+
+  <!-- Left column: Editor & Local CLI -->
+  <g transform="translate(30,110)">
+    <!-- Editor -->
+    <rect class="box" x="0" y="0" width="260" height="100"/>
+    <text x="20" y="35" class="subtitle">Editor (Zed)</text>
+    <text x="20" y="65" class="small">Agent Panel ⇄ ACP (JSON lines over stdio)</text>
+
+    <!-- mux-cli (local) -->
+    <g transform="translate(0,130)">
+      <rect class="box" x="0" y="0" width="260" height="110"/>
+      <text x="20" y="35" class="subtitle">mux-cli</text>
+      <text x="20" y="65" class="small">Local mode: runs ACP loop in-process</text>
+      <text x="20" y="85" class="small">Launch target in Zed settings</text>
+    </g>
+
+    <!-- mux-cli-relay -->
+    <g transform="translate(0,270)">
+      <rect class="box" x="0" y="0" width="260" height="130"/>
+      <text x="20" y="35" class="subtitle">mux-cli-relay</text>
+      <text x="20" y="65" class="small">Bridges stdio ⇄ WebSocket/TCP</text>
+      <text x="20" y="85" class="small">Reconnect &amp; backpressure (future)</text>
+      <text x="20" y="105" class="small">TLS / token / mTLS (future)</text>
+    </g>
+
+    <!-- arrows from Editor to mux-cli and relay -->
+    <path d="M130,100 L130,120" class="arrow"/>
+    <path d="M130,100 L130,270" class="arrow"/>
+    <text x="140" y="115" class="small">ACP stdio</text>
+    <text x="140" y="255" class="small">ACP stdio</text>
+  </g>
+
+  <!-- Middle column: Remote daemon & core -->
+  <g transform="translate(420,110)">
+    <!-- mux-agentd -->
+    <rect class="box" x="0" y="0" width="320" height="120"/>
+    <text x="20" y="35" class="subtitle">mux-agentd</text>
+    <text x="20" y="62" class="small">WebSocket/TCP listener</text>
+    <text x="20" y="82" class="small">1 connection = 1 ACP session</text>
+
+    <!-- arrow from relay to agentd -->
+    <path d="M-130,295 C-40,295 10,60 10,60" class="arrow"/>
+    <text x="-115" y="285" class="small">WS/TCP</text>
+
+    <!-- ACP Core box -->
+    <g transform="translate(0,150)">
+      <rect class="box-muted" x="0" y="0" width="320" height="170"/>
+      <text x="20" y="35" class="subtitle">ACP Server Core</text>
+      <text x="20" y="65" class="small">Request router • Workspace ops</text>
+      <text x="20" y="85" class="small">Planner loop • Diff/apply</text>
+      <rect class="pill" x="18" y="100" width="130" height="26"/>
+      <text x="28" y="118" class="small">ping/pong • progress</text>
+      <rect class="pill" x="160" y="100" width="140" height="26"/>
+      <text x="172" y="118" class="small">cancellation • limits</text>
+    </g>
+
+    <!-- Router -->
+    <g transform="translate(0,340)">
+      <rect class="box-muted" x="0" y="0" width="320" height="170"/>
+      <text x="20" y="35" class="subtitle">Model Router</text>
+      <text x="20" y="65" class="small">Registry • Health • Residency hooks</text>
+      <text x="20" y="85" class="small">Streaming chat/completions API</text>
+    </g>
+  </g>
+
+  <!-- Right column: Drivers & GPUs -->
+  <g transform="translate(800,110)">
+    <!-- Drivers -->
+    <rect class="box" x="0" y="0" width="560" height="200"/>
+    <text x="20" y="35" class="subtitle">Drivers</text>
+    <g transform="translate(20,55)">
+      <rect class="box-muted" x="0" y="0" width="240" height="120"/>
+      <text x="12" y="28" class="label">llama.cpp (sidecar)</text>
+      <text x="12" y="52" class="small">OpenAI-compatible server</text>
+      <text x="12" y="72" class="small">SSE streaming • health probes</text>
+    </g>
+    <g transform="translate(280,55)">
+      <rect class="box-muted" x="0" y="0" width="260" height="120"/>
+      <text x="12" y="28" class="label">vLLM (optional sidecar)</text>
+      <text x="12" y="52" class="small">Process orchestration only</text>
+      <text x="12" y="72" class="small">Health/ready • shutdown</text>
+    </g>
+
+    <!-- Candle (future) -->
+    <g transform="translate(20,210)">
+      <rect class="box-muted" x="0" y="0" width="520" height="90"/>
+      <text x="12" y="28" class="label">Candle (pure Rust, future)</text>
+      <text x="12" y="52" class="small">safetensors mmap • tokenizer • streaming</text>
+    </g>
+
+    <!-- GPU Residency -->
+    <g transform="translate(0,320)">
+      <rect class="box" x="0" y="0" width="560" height="200"/>
+      <text x="20" y="35" class="subtitle">GPU Residency &amp; Topology</text>
+      <text x="20" y="62" class="small">Per-GPU LRU of models • Clean unload</text>
+      <text x="20" y="82" class="small">Pre-warm hooks • Model→GPU pinning</text>
+      <g transform="translate(20,100)">
+        <rect class="box-muted" x="0" y="0" width="150" height="70"/><text x="12" y="30" class="small">GPU 0</text>
+        <rect class="box-muted" x="170" y="0" width="150" height="70"/><text x="182" y="30" class="small">GPU 1</text>
+        <rect class="box-muted" x="340" y="0" width="150" height="70"/><text x="352" y="30" class="small">GPU N</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom band: Staging, FS, Telemetry, Security -->
+  <g transform="translate(30,720)">
+    <rect class="box" x="0" y="0" width="1335" height="150"/>
+    <text x="20" y="35" class="subtitle">Shared Services</text>
+
+    <g transform="translate(20,50)">
+      <rect class="box-muted" x="0" y="0" width="360" height="80"/>
+      <text x="12" y="28" class="label">Staging &amp; Cache</text>
+      <text x="12" y="52" class="small">NFS → NVMe (CAS, locks, integrity)</text>
+    </g>
+
+    <g transform="translate(400,50)">
+      <rect class="box-muted" x="0" y="0" width="300" height="80"/>
+      <text x="12" y="28" class="label">Telemetry</text>
+      <text x="12" y="52" class="small">tracing • Prometheus • JSON logs</text>
+    </g>
+
+    <g transform="translate(720,50)">
+      <rect class="box-muted" x="0" y="0" width="290" height="80"/>
+      <text x="12" y="28" class="label">Security</text>
+      <text x="12" y="52" class="small">TLS/mTLS • tokens • allowlists</text>
+    </g>
+
+    <g transform="translate(1025,50)">
+      <rect class="box-muted" x="0" y="0" width="290" height="80"/>
+      <text x="12" y="28" class="label">Config</text>
+      <text x="12" y="52" class="small">models.yaml • env overrides</text>
+    </g>
+  </g>
+
+  <!-- Arrows between major blocks -->
+  <path d="M290,205 L420,205" class="arrow"/>
+  <text x="300" y="195" class="small">ACP stdio</text>
+
+  <path d="M290,345 L420,170" class="arrow"/>
+  <text x="300" y="330" class="small">WS/TCP</text>
+
+  <path d="M740,265 L800,210" class="arrow"/>
+  <text x="745" y="200" class="small">Driver RPC</text>
+
+  <path d="M740,430 L800,430" class="arrow"/>
+  <text x="745" y="420" class="small">Model load/unload</text>
+
+  <!-- Legend -->
+  <g transform="translate(1130,70)">
+    <rect class="box" x="0" y="0" width="240" height="90"/>
+    <text x="12" y="26" class="legend">Legend</text>
+    <g transform="translate(10,38)">
+      <rect class="box" x="0" y="-14" width="18" height="18"/><text x="26" y="0" class="legend">Process / Service</text>
+    </g>
+    <g transform="translate(10,62)">
+      <rect class="box-muted" x="0" y="-14" width="18" height="18"/><text x="26" y="0" class="legend">Component / Module</text>
+    </g>
+  </g>
+</svg>
