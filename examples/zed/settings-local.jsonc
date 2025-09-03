@@ -1,0 +1,11 @@
+{
+  "agent_servers": {
+    "Beast ACP (mux, local)": {
+      "command": "/usr/local/bin/mux-cli",
+      "env": {
+        "MODELS_CONFIG": "/etc/mux/models.yaml",
+        "RUST_LOG": "info"
+      }
+    }
+  }
+}

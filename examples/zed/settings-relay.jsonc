@@ -1,0 +1,13 @@
+{
+  "agent_servers": {
+    "Beast ACP (mux, relay)": {
+      "command": "/usr/local/bin/mux-cli-relay",
+      "args": ["--relay", "wss://agent.example:7777/agent"],
+      "env": {
+        "MODELS_CONFIG": "/etc/mux/models.yaml",
+        "MUX_RELAY_TOKEN": "use-an-env-or-file-not-the-literal-value",
+        "RUST_LOG": "info"
+      }
+    }
+  }
+}

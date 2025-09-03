@@ -1,6 +1,6 @@
 use anyhow::Result;
-use futures::{stream, StreamExt};
-use mux_drivers::{Driver, ChatRequest, ChatChunk};
+use futures::stream;
+use mux_drivers::{ChatChunk, ChatRequest, Driver};
 use mux_router::ModelSpec;
 use std::sync::Arc;
 
@@ -10,7 +10,9 @@ pub struct VllmDriver {
 
 impl VllmDriver {
     pub fn new(endpoint: String) -> Arc<Self> {
-        Arc::new(Self { _endpoint: endpoint })
+        Arc::new(Self {
+            _endpoint: endpoint,
+        })
     }
 }
 
@@ -23,8 +25,14 @@ impl Driver for VllmDriver {
     ) -> Result<futures::stream::BoxStream<'static, Result<ChatChunk>>> {
         // Stub: return a tiny stream
         let s = stream::iter(vec![
-            Ok(ChatChunk{ text: "hello from vllm stub".into(), done: false }),
-            Ok(ChatChunk{ text: "".into(), done: true }),
+            Ok(ChatChunk {
+                text: "hello from vllm stub".into(),
+                done: false,
+            }),
+            Ok(ChatChunk {
+                text: "".into(),
+                done: true,
+            }),
         ]);
         Ok(Box::pin(s))
     }

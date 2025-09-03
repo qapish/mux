@@ -5,9 +5,14 @@ edition = "2021"
 
 [dependencies]
 anyhow = { workspace = true }
-tokio = { workspace = true }
-tracing = { workspace = true }
+clap = { workspace = true }
+futures = { workspace = true }
 mux-acp = { path = "../mux-acp" }
 mux-planner = { path = "../mux-planner" }
 mux-telemetry = { path = "../mux-telemetry" }
 mux-config = { path = "../mux-config" }
+tokio = { workspace = true }
+tokio-util = { version = "0.7", features = ["codec"] }
+tokio-tungstenite = "0.21"
+tungstenite = { version = "0.21", features = ["rustls-tls-webpki-roots"] }
+tracing = { workspace = true }
