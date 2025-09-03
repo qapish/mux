@@ -1,0 +1,68 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  build-test-lint:
+    name: build / test / fmt / clippy (${{ matrix.os }}, rust ${{ matrix.rust }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+        rust:
+          - stable
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust (${{ matrix.rust }})
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: clippy, rustfmt
+
+      - name: Cache cargo
+        uses: swatinem/rust-cache@v2
+        with:
+          key: ${{ runner.os }}-cargo-${{ matrix.rust }}
+          cache-on-failure: true
+
+      - name: Show versions
+        run: |
+          rustc -Vv
+          cargo -V
+          rustfmt -V
+          cargo clippy -V || true
+
+      - name: Format check
+        run: cargo fmt --all -- --check
+
+      - name: Clippy (all targets, all features)
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+      - name: Build (debug)
+        run: cargo build --workspace --all-features --verbose
+
+      - name: Test
+        run: cargo test --workspace --all-features --no-fail-fast --verbose
